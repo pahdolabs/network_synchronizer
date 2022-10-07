@@ -870,7 +870,7 @@ bool ServerController::fetch_next_input(real_t p_delta) {
 			// The input buffer is empty; a packet is missing.
 			is_new_input = false;
 			ghost_input_count += 1;
-			NET_DEBUG_PRINT("Input buffer is void, i'm using the previous one!");
+			NET_DEBUG_PRINT("Missing input: " + itos(next_input_id) + " Input buffer is void, i'm using the previous one!");
 
 		} else {
 			// The input buffer is not empty, search the new input.

@@ -2025,7 +2025,7 @@ void ClientSynchronizer::process() {
 	const real_t physics_ticks_per_second = Engine::get_singleton()->get_iterations_per_second();
 
 #ifdef DEBUG_ENABLED
-	if (unlikely(Engine::get_singleton()->get_frames_per_second() < physics_ticks_per_second)) {
+	if (unlikely(Engine::get_singleton()->get_frames_per_second() < physics_ticks_per_second) && ProjectSettings::get_singleton()->get_setting("NetworkSynchronizer/log_debug_fps_warnings")) {
 		NET_DEBUG_PRINT("Current FPS is " + itos(Engine::get_singleton()->get_frames_per_second()) + ", but the minimum required FPS is " + itos(physics_ticks_per_second) + ", the client is unable to generate enough inputs for the server.");
 	}
 #endif
@@ -2350,7 +2350,7 @@ void ClientSynchronizer::process_controllers_recovery(real_t p_delta) {
 					rec.vars);
 
 			if (different) {
-				NET_DEBUG_PRINT("Rewind is needed because the node on client is different: " + rew_node_data->node->get_path());
+				NET_DEBUG_PRINT("Rewind on input " + itos(checkable_input_id) + " is needed because the node on client is different: " + rew_node_data->node->get_path());
 				recover_this_node = true;
 			} else if (rec.vars.size() > 0) {
 				rec.node_data = rew_node_data;
@@ -2868,6 +2868,15 @@ bool ClientSynchronizer::parse_sync_data(
 					synchronizer_node_data,
 					var_id,
 					v);
+
+			if (synchronizer_node_data->controlled_by == player_controller_node_data && ProjectSettings::get_singleton()->get_setting("NetworkSynchronizer/display_server_ghost")) {
+				// This is the main controller, call func to access the server values
+				NetworkedController *controller = static_cast<NetworkedController *>(player_controller_node_data->node);
+				controller->call(
+						SNAME("_receive_server_value"),
+						synchronizer_node_data->vars[var_id].var.name,
+						v.duplicate(true));
+			}
 
 			// Just reset the variable name so we can continue iterate.
 			var_id = UINT32_MAX;
