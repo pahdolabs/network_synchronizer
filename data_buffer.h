@@ -147,10 +147,6 @@ private:
 	bool is_reading = false;
 	BitArray buffer;
 
-#if DEBUG_ENABLED
-	bool debug_enabled = true;
-#endif
-
 public:
 	static void _bind_methods();
 
