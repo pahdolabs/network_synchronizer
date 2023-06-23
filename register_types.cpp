@@ -41,6 +41,8 @@
 #include "scene_synchronizer.h"
 #include "scene_synchronizer_debugger.h"
 
+#include "tests/network_synchronizer_tests.h"
+
 void register_network_synchronizer_types() {
 	ClassDB::register_class<DataBuffer>();
 	ClassDB::register_class<SceneDiff>();

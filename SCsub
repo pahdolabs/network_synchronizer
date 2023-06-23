@@ -7,6 +7,4 @@ cpplize_debugger.create_debugger_header()
 Import("env")
 Import("env_modules")
 
-env_network_synchronizer = env_modules.Clone()
-
-env_network_synchronizer.add_source_files(env.modules_sources, "*.cpp")
+env_modules.add_source_files(env.modules_sources, "*.cpp")
