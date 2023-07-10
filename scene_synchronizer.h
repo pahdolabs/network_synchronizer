@@ -32,6 +32,9 @@
 	@author AndreaCatania
 */
 
+#ifndef SCENE_SYNCHRONIZER_H
+#define SCENE_SYNCHRONIZER_H
+
 #include "scene/main/node.h"
 
 #include "core/local_vector.h"
@@ -39,9 +42,6 @@
 #include "net_action.h"
 #include "net_utilities.h"
 #include <deque>
-
-#ifndef SCENE_SYNCHRONIZER_H
-#define SCENE_SYNCHRONIZER_H
 
 #include "godot_backward_utility_header.h"
 
