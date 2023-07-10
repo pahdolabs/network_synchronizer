@@ -161,4 +161,4 @@ private:
 	void check_missing_actions();
 };
 
-#endif // CLIENT_SYNCHRONIZER
+#endif // CLIENT_SYNCHRONIZER_H
