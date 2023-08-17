@@ -215,6 +215,10 @@ void InputNetworkEncoder::reset_inputs_to_defaults(LocalVector<Variant> &r_input
 }
 
 bool InputNetworkEncoder::are_different(DataBuffer &p_buffer_A, DataBuffer &p_buffer_B) const {
+	if (p_buffer_A.size() != p_buffer_B.size()) {
+		return true;
+	}
+
 	for (uint32_t i = 0; i < input_info.size(); i += 1) {
 		const NetworkedInputInfo &info = input_info[i];
 
