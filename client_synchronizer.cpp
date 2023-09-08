@@ -320,6 +320,7 @@ void ClientSynchronizer::on_actions_received(
 		int sender_peer,
 		const LocalVector<SenderNetAction> &p_actions) {
 	ERR_FAIL_COND_MSG(sender_peer != 1, "[FATAL] Actions dropped becouse was not sent by the server!");
+	ERR_FAIL_COND_MSG(player_controller_node_data == nullptr, "[FATAL] No valid player controller data");
 
 	for (uint32_t g = 0; g < p_actions.size(); g += 1) {
 		const SenderNetAction &action = p_actions[g];
@@ -433,7 +434,7 @@ void ClientSynchronizer::store_snapshot() {
 		snap_node_vars->resize(node_data->vars.size());
 		NetUtility::Var *vars = snap_node_vars->ptrw();
 		for (uint32_t v = 0; v < node_data->vars.size(); v += 1) {
-			if (node_data->vars[v].enabled) {
+			if (node_data->vars[v] != nullptr && node_data->vars[v].enabled) {
 				vars[v] = node_data->vars[v].var;
 			} else {
 				vars[v].name = StringName();
